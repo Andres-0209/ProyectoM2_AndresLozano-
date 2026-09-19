@@ -82,6 +82,11 @@ app.get("/", (req, res) => {
 app.use("/posts", postsRoutes);
 app.use("/authors", authorsRoutes);
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Error interno del servidor" });
+});
+
 export default app;
 
 if (process.env.NODE_ENV !== "test") {

@@ -43,6 +43,10 @@ if (!name || !email) {
 const updateAuthor = async (req, res) => {
   const authorId = req.params.id;
   const { name, email, bio } = req.body;
+  
+  if (!name || !email) {
+    return res.status(400).json({ error: "Los campos 'name' y 'email' son obligatorios" });
+  }
 
   try {
     const queryText = `
@@ -63,7 +67,7 @@ const updateAuthor = async (req, res) => {
     console.error(err);
 
     if (err.code === '23505') {
-      return res.status(400).json({
+      return res.status(409).json({
         error: 'El correo electrónico ya está en uso',
       });
     }
