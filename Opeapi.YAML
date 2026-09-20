@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  title: MiniBlog API
+  description: API REST para gestionar autores y publicaciones (Proyecto Integrador 2)
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+ 
+tags:
+  - name: authors
+  - name: posts
+ 
+paths:
+  /authors:
+    get:
+      tags: [authors]
+      summary: Listar todos los autores
+      responses:
+        "200":
+          description: Lista de autores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Author"
+    post:
+      tags: [authors]
+      summary: Crear un autor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorInput"
+      responses:
+        "201":
+          description: Autor creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "400":
+          description: Faltan campos obligatorios
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "409":
+          description: El email ya está en uso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+ 
+  /authors/{id}:
+    get:
+      tags: [authors]
+      summary: Obtener un autor por id
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      responses:
+        "200":
+          description: Autor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "404":
+          description: Autor no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags: [authors]
+      summary: Actualizar un autor
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorInput"
+      responses:
+        "200":
+          description: Autor actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Author"
+        "400":
+          description: Faltan campos obligatorios
+        "404":
+          description: Autor no encontrado
+        "409":
+          description: El email ya está en uso
+    delete:
+      tags: [authors]
+      summary: Eliminar un autor (elimina en cascada sus posts)
+      parameters:
+        - $ref: "#/components/parameters/AuthorId"
+      responses:
+        "200":
+          description: Autor eliminado
+        "404":
+          description: Autor no encontrado
+ 
+  /posts:
+    get:
+      tags: [posts]
+      summary: Listar todos los posts (incluye nombre del autor)
+      responses:
+        "200":
+          description: Lista de posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+    post:
+      tags: [posts]
+      summary: Crear un post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostInput"
+      responses:
+        "201":
+          description: Post creado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "400":
+          description: Faltan campos obligatorios o author_id inexistente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+ 
+  /posts/{id}:
+    get:
+      tags: [posts]
+      summary: Obtener un post por id
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      responses:
+        "200":
+          description: Post encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        "404":
+          description: Post no encontrado
+    put:
+      tags: [posts]
+      summary: Actualizar un post
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PostUpdateInput"
+      responses:
+        "200":
+          description: Post actualizado
+        "400":
+          description: Faltan campos obligatorios o author_id inexistente
+        "404":
+          description: Post no encontrado
+    delete:
+      tags: [posts]
+      summary: Eliminar un post
+      parameters:
+        - $ref: "#/components/parameters/PostId"
+      responses:
+        "200":
+          description: Post eliminado
+        "404":
+          description: Post no encontrado
+ 
+  /posts/author/{authorid}:
+    get:
+      tags: [posts]
+      summary: Listar los posts de un autor
+      parameters:
+        - name: authorid
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Lista de posts del autor
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Post"
+        "404":
+          description: Autor no encontrado
+ 
+components:
+  parameters:
+    AuthorId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+    PostId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+ 
+  schemas:
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+ 
+    AuthorInput:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        bio:
+          type: string
+ 
+    Post:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        content:
+          type: string
+        published:
+          type: boolean
+        author_id:
+          type: integer
+        author_name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+ 
+    PostInput:
+      type: object
+      required: [title, content, author_id]
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        author_id:
+          type: integer
+ 
+    PostUpdateInput:
+      type: object
+      required: [title, content, published]
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        published:
+          type: boolean
+ 
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+ 
