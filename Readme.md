@@ -219,7 +219,7 @@ Crear un archivo `.env` en la raíz basándose en `.env.example` para establecer
 |---|---|---|---|
 | `PORT` | Puerto en el que escucha el servidor Express | Sí | `3000` |
 | `DB_USER` | Usuario administrador de PostgreSQL | Sí | `postgres` |
-| `DB_PASSWORD` | Contraseña del usuario de base de datos | Sí | `Admin02` |
+| `DB_PASSWORD` | Contraseña del usuario de base de datos | Sí | `password` |
 | `DB_HOST` | Host del servidor de base de datos | Sí | `localhost` |
 | `DB_PORT` | Puerto del servicio PostgreSQL | Sí | `5432` |
 | `DB_NAME` | Nombre de la base de datos | Sí | `miniblog` |
@@ -229,7 +229,7 @@ Ejemplo de contenido para `.env`:
 ```env
 PORT=3000
 DB_USER=postgres
-DB_PASSWORD=Admin02
+DB_PASSWORD=password
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=miniblog
