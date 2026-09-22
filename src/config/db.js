@@ -1,4 +1,4 @@
-import pkg from 'pg';
+import pkg from "pg";
 const { Pool } = pkg;
 
 const buildConnectionString = () => {
@@ -6,13 +6,13 @@ const buildConnectionString = () => {
     return process.env.DATABASE_URL;
   }
 
-  const user = process.env.DB_USER || 'postgres';
+  const user = process.env.DB_USER || "postgres";
   const password = process.env.DB_PASSWORD;
-  const host = process.env.DB_HOST || 'localhost';
+  const host = process.env.DB_HOST || "localhost";
   const port = process.env.DB_PORT || 5432;
-  const database = process.env.DB_NAME || 'miniblog';
+  const database = process.env.DB_NAME || "miniblog";
 
-  const auth = password ? `:${encodeURIComponent(password)}` : '';
+  const auth = password ? `:${encodeURIComponent(password)}` : "";
   return `postgresql://${user}${auth}@${host}:${port}/${database}`;
 };
 
@@ -25,23 +25,3 @@ const db = new Pool({
 });
 
 export default db;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
