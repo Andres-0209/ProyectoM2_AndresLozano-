@@ -8,8 +8,8 @@
 
 * **🌐 Servidor en Producción (Railway):** [proyectom2andreslozano-production.up.railway.app](https://proyectom2andreslozano-production.up.railway.app/)
 * **📚 Documentación Swagger (OpenAPI UI):** [proyectom2andreslozano-production.up.railway.app/api-docs/](https://proyectom2andreslozano-production.up.railway.app/api-docs/)
-* **📚 Endpoint de Autores:** [proyectom2andreslozano-production.up.railway.app/authors](proyectom2andreslozano-production.up.railway.app/authors)
-* **📚 Endpoint de Posts** [proyectom2andreslozano-production.up.railway.app/posts](proyectom2andreslozano-production.up.railway.app/posts)
+* **📚 Endpoint de Autores:** [proyectom2andreslozano-production.up.railway.app/authors](http://proyectom2andreslozano-production.up.railway.app/authors)
+* **📚 Endpoint de Posts** [proyectom2andreslozano-production.up.railway.app/posts](http://proyectom2andreslozano-production.up.railway.app/posts)
 
 
 
